@@ -53,7 +53,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <segue destination="tSk-g1-aHs" kind="show" id="gXV-eE-967"/>
+                                    <segue destination="tSk-g1-aHs" kind="show" identifier="ShowDetailSegue" id="gXV-eE-967"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoPictureCell" id="M9r-q3-LWf">
@@ -63,14 +63,19 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Pictures Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8t-hp-EZp">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Pictures Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8t-hp-EZp">
                                             <rect key="frame" x="16" y="0.0" width="343" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Z8t-hp-EZp" firstAttribute="leading" secondItem="HCn-iv-bIR" secondAttribute="leading" constant="16" id="1ZZ-8T-XNh"/>
+                                        <constraint firstAttribute="trailing" secondItem="Z8t-hp-EZp" secondAttribute="trailing" constant="16" id="iZh-Dj-GBb"/>
+                                        <constraint firstItem="Z8t-hp-EZp" firstAttribute="top" secondItem="HCn-iv-bIR" secondAttribute="top" id="yUb-d6-ZVJ"/>
+                                        <constraint firstAttribute="bottom" secondItem="Z8t-hp-EZp" secondAttribute="bottom" id="yV7-PV-z89"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -80,7 +85,7 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Pictures" id="Zdf-7t-Un8" userLabel="Pictures"/>
+                    <navigationItem key="navigationItem" title="Weatherpics" id="Zdf-7t-Un8" userLabel="Pictures"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
@@ -93,13 +98,53 @@
                     <view key="view" contentMode="scaleToFill" id="bSW-Wc-lRR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VUn-SS-szM">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Loading Image..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uhb-rE-S8t">
+                                        <rect key="frame" x="138" y="291" width="127" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Pe9-hS-8Bf">
+                                        <rect key="frame" x="110" y="291" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Caption" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdY-j1-pEn">
+                                        <rect key="frame" x="157.5" y="566" width="59.5" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wjh-0C-A00" userLabel="PhotoImageView">
+                                        <rect key="frame" x="63" y="234.5" width="249" height="133"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="VUn-SS-szM" firstAttribute="top" secondItem="HOU-iT-d8u" secondAttribute="top" id="KJi-Cx-dnN"/>
+                            <constraint firstItem="VUn-SS-szM" firstAttribute="leading" secondItem="HOU-iT-d8u" secondAttribute="leading" id="VOk-vm-try"/>
+                            <constraint firstItem="HOU-iT-d8u" firstAttribute="bottom" secondItem="VUn-SS-szM" secondAttribute="bottom" id="chn-2j-R16"/>
+                            <constraint firstItem="HOU-iT-d8u" firstAttribute="trailing" secondItem="VUn-SS-szM" secondAttribute="trailing" id="est-Pq-wvh"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="HOU-iT-d8u"/>
                     </view>
+                    <connections>
+                        <outlet property="photoCaptionLabel" destination="bdY-j1-pEn" id="xok-GK-2hQ"/>
+                        <outlet property="photoImageView" destination="Wjh-0C-A00" id="1NO-PK-PWq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gp8-b4-HCq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1446" y="-629"/>
+            <point key="canvasLocation" x="1445.5999999999999" y="-629.2353823088456"/>
         </scene>
     </scenes>
 </document>
