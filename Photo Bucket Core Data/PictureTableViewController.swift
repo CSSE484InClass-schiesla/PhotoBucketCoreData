@@ -7,21 +7,23 @@
 //
 
 import UIKit
-import CoreData
+import Firebase
 
 class PictureTableViewController: UITableViewController {
     
-    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var picRef: CollectionReference!
+    var picListener: ListenerRegistration!
     
     var cellIdentifier = "PictureCell"
     var noCellIdentifier = "NoPictureCell"
     var showDetailSegueId = "ShowDetailSegue"
-    var pictures = [Picture]()
+    var pictures = [WeatherPic]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(showAddDialog))
+        picRef = Firestore.firestore().collection("weatherPics")
     }
     
     @objc func showAddDialog() {
@@ -39,16 +41,8 @@ class PictureTableViewController: UITableViewController {
             let photoUrlTextField = alertController.textFields![0]
             let captionTextField = alertController.textFields![1]
             
-            let newPicture = Picture(context: self.context)
-            newPicture.pictureUrl = photoUrlTextField.text!
-            newPicture.caption = captionTextField.text!
-            (UIApplication.shared.delegate as! AppDelegate).saveContext()
-            self.updatePictureArray()
-            
-            if self.pictures.count == 1 {
-                self.tableView.reloadData()
-            } else {
-                self.tableView.insertRows(at: [IndexPath(row:0, section:0)], with: UITableViewRowAnimation.top)    }
+            let newPicture = WeatherPic(caption: captionTextField.text!, imageUrl: photoUrlTextField.text!)
+            self.picRef.addDocument(data: newPicture.data)
         }
         
         alertController.addAction(createPictureAction)
@@ -58,18 +52,58 @@ class PictureTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.updatePictureArray()
-        tableView.reloadData()
+        self.pictures.removeAll()
+        picListener = picRef.order(by: "caption", descending: true).limit(to: 50).addSnapshotListener({ (querySnapshot, error) in
+            guard let snapshot = querySnapshot else {
+                return
+            }
+            snapshot.documentChanges.forEach {(docChange) in
+                if (docChange.type == .added) {
+                    print("New quote: \(docChange.document.data())")
+                    self.picAdded(docChange.document)
+                } else if (docChange.type == .modified) {
+                    print("Modified quote: \(docChange.document.data())")
+                    self.picUpdated(docChange.document)
+                } else if (docChange.type == .removed) {
+                    print("Removed quote: \(docChange.document.data())")
+                    self.picRemoved(docChange.document)
+                }
+            }
+            self.pictures.sort(by: {(pic1, pic2) -> Bool in
+                return pic1.caption > pic2.caption
+            })
+            self.tableView.reloadData()
+        })
     }
     
-    func updatePictureArray() {
-        let request: NSFetchRequest<Picture> = Picture.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "caption", ascending: false)]
-        do {
-            pictures = try context.fetch(request)
-        } catch {
-            fatalError("Unresolved Core Data error \(error)")
+    func picAdded(_ document: DocumentSnapshot) {
+        let newPic = WeatherPic(documentSnapshot: document)
+        pictures.append(newPic)
+    }
+    
+    func picUpdated(_ document: DocumentSnapshot) {
+        let modPic = WeatherPic(documentSnapshot: document)
+        for pic in pictures {
+            if (pic.id == modPic.id) {
+                pic.caption = modPic.caption
+                pic.imageUrl = modPic.imageUrl
+                break
+            }
         }
+    }
+    
+    func picRemoved(_ document: DocumentSnapshot) {
+        for i in 0..<pictures.count {
+            if pictures[i].id == document.documentID {
+                pictures.remove(at: i)
+                break
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        picListener.remove()
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -78,13 +112,6 @@ class PictureTableViewController: UITableViewController {
         } else {
             super.setEditing(editing, animated: animated)
         }
-    }
-    
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -105,8 +132,6 @@ class PictureTableViewController: UITableViewController {
         }
         return cell
     }
- 
-
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -119,17 +144,8 @@ class PictureTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            context.delete(pictures[indexPath.row])
-            (UIApplication.shared.delegate as! AppDelegate).saveContext()
-            updatePictureArray()
-            
-            if pictures.count == 0 {
-                tableView.reloadData()
-                self.setEditing(false, animated: true)
-            } else {
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }
+            let picToDelete = pictures[indexPath.row]
+            picRef.document(picToDelete.id!).delete()
         }
     }
 
@@ -142,7 +158,7 @@ class PictureTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == showDetailSegueId {
             if let indexPath = tableView.indexPathForSelectedRow {
-                (segue.destination as! PictureDetailViewController).picture = pictures[indexPath.row]
+                (segue.destination as! PictureDetailViewController).picRef = picRef.document(pictures[indexPath.row].id!)
             }
         }
     }

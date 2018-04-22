@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class PictureDetailViewController: UIViewController {
 
-    var picture: Picture?
+    var picRef: DocumentReference?
+    var picListener: ListenerRegistration!
+    var weatherPic: WeatherPic?
     
     @IBOutlet weak var photoCaptionLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
@@ -26,35 +29,48 @@ class PictureDetailViewController: UIViewController {
     
         alertController.addTextField { (textField) in
             textField.placeholder = "Caption"
-            textField.text = self.picture?.caption
+            textField.text = self.weatherPic?.caption
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
         
-        let createPhotoAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.default) { (action) in
+        let editPhotoAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.default) { (action) in
             let captionTextField = alertController.textFields![0]
-            self.picture?.caption = captionTextField.text!
-            self.updateView()
-            (UIApplication.shared.delegate as! AppDelegate).saveContext()
-            
+            self.weatherPic?.caption = captionTextField.text!
+            self.picRef?.setData(self.weatherPic!.data)
         }
         
-        alertController.addAction(createPhotoAction)
+        alertController.addAction(editPhotoAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateView()
+        picListener = picRef?.addSnapshotListener({ (documentSnapshot, error) in
+            if let error = error {
+                print("Error getting the document: \(error.localizedDescription)")
+                return
+            }
+            if !documentSnapshot!.exists {
+                return
+            }
+            self.weatherPic = WeatherPic(documentSnapshot: documentSnapshot!)
+            self.updateView()
+        })
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        picListener.remove()
     }
     
     func updateView() {
-        photoCaptionLabel.text = picture?.caption
+        photoCaptionLabel.text = weatherPic?.caption
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let imgString = picture?.pictureUrl {
+        if let imgString = weatherPic?.imageUrl {
             if let imgUrl = URL(string: imgString) {
                 DispatchQueue.global().async { // Download in the background
                     do {

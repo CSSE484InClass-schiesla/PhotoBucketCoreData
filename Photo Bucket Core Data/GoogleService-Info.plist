@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>858326062064-andn2o4ksufobru2ndri1bahbuto1m9p.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.858326062064-andn2o4ksufobru2ndri1bahbuto1m9p</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC3IUUg_mFkh7DBYuQpxBmY8UhhvC_zyEw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>858326062064</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>edu.rosehulman.schiesla.Photo-Bucket-Firestore</string>
+	<key>PROJECT_ID</key>
+	<string>schiesla-photo-bucket</string>
+	<key>STORAGE_BUCKET</key>
+	<string>schiesla-photo-bucket.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:858326062064:ios:91544ffe2f623393</string>
+	<key>DATABASE_URL</key>
+	<string>https://schiesla-photo-bucket.firebaseio.com</string>
+</dict>
+</plist>

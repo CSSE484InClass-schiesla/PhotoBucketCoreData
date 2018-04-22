@@ -1,0 +1,6 @@
+framework module Pods_Photo_Bucket_Core_Data {
+  umbrella header "Pods-Photo Bucket Core Data-umbrella.h"
+
+  export *
+  module * { export * }
+}
