@@ -18,37 +18,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tTM-ot-4tW">
-                                <rect key="frame" x="145" y="421" width="87" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Facebook"/>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Photo Bucket" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHU-oc-6AJ">
-                                <rect key="frame" x="83" y="107" width="208" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Bucket" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHU-oc-6AJ">
+                                <rect key="frame" x="101" y="151" width="172" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQZ-OX-MEJ">
-                                <rect key="frame" x="135" y="345" width="105" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQZ-OX-MEJ">
+                                <rect key="frame" x="93" y="348" width="189" height="30"/>
+                                <color key="backgroundColor" red="0.91999127540000003" green="0.1376222409" blue="0.007948525461" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Rosefire"/>
                                 <connections>
                                     <action selector="loginWithRosefire:" destination="K0Y-mZ-SKX" eventType="touchUpInside" id="qzx-Vb-KUj"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UIL-33-Be4" customClass="GIDSignInButton">
-                                <rect key="frame" x="93" y="383" width="189" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UIL-33-Be4" customClass="GIDSignInButton">
+                                <rect key="frame" x="93" y="386" width="189" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="zQZ-OX-MEJ" firstAttribute="centerX" secondItem="gcD-wk-GHK" secondAttribute="centerX" id="1Oo-vk-1MH"/>
+                            <constraint firstItem="xHU-oc-6AJ" firstAttribute="centerX" secondItem="gcD-wk-GHK" secondAttribute="centerX" id="7ge-kI-6ka"/>
+                            <constraint firstItem="gcD-wk-GHK" firstAttribute="trailing" secondItem="UIL-33-Be4" secondAttribute="trailing" constant="93" id="Ble-JT-ptv"/>
+                            <constraint firstItem="zQZ-OX-MEJ" firstAttribute="top" secondItem="xHU-oc-6AJ" secondAttribute="bottom" constant="161" id="E66-Ip-Fbs"/>
+                            <constraint firstItem="zQZ-OX-MEJ" firstAttribute="height" secondItem="UIL-33-Be4" secondAttribute="height" id="KUL-TO-nd3"/>
+                            <constraint firstItem="gcD-wk-GHK" firstAttribute="bottom" secondItem="UIL-33-Be4" secondAttribute="bottom" constant="251" id="Vzc-xi-f0X"/>
+                            <constraint firstItem="UIL-33-Be4" firstAttribute="top" secondItem="zQZ-OX-MEJ" secondAttribute="bottom" constant="8" id="ZjO-FT-C3T"/>
+                            <constraint firstItem="UIL-33-Be4" firstAttribute="centerX" secondItem="gcD-wk-GHK" secondAttribute="centerX" id="gqn-2V-lcK"/>
+                            <constraint firstItem="zQZ-OX-MEJ" firstAttribute="width" secondItem="UIL-33-Be4" secondAttribute="width" id="zit-Hn-c59"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="gcD-wk-GHK"/>
                     </view>
                     <connections>
                         <outlet property="googleLoginButton" destination="UIL-33-Be4" id="IX1-C5-cfQ"/>
+                        <outlet property="rosefireLoginButton" destination="zQZ-OX-MEJ" id="ilK-LX-V1g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7OI-3J-8zM" userLabel="First Responder" sceneMemberID="firstResponder"/>

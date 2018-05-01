@@ -17,12 +17,18 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     let rosefireKey = "d3162b8d-b41e-408f-82af-0bff5c96e3c6"
     
     @IBOutlet weak var googleLoginButton: GIDSignInButton!
+    @IBOutlet weak var rosefireLoginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         GIDSignIn.sharedInstance().uiDelegate = self
         googleLoginButton.style = .wide
+        
+        rosefireLoginButton.titleLabel?.text = "Rosefire Login"
+        rosefireLoginButton.setTitleColor(.white, for: .normal)
+        rosefireLoginButton.backgroundColor = UIColor(red: 0.5, green: 0, blue: 0, alpha: 0.9)
+        
     }
     
     @IBAction func loginWithRosefire(_ sender: Any) {

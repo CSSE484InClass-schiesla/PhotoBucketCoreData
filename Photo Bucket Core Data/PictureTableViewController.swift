@@ -21,33 +21,43 @@ class PictureTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = editButtonItem
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(showAddDialog))
+        //navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action: #selector(showAddDialog))
+        navigationItem.rightBarButtonItem?.title = "Menu"
+        
+        // We need to provide a popover sourceView when using it on iPad
+        //actionSheetController.popoverPresentationController?.sourceView = sender as UIView
+
         picRef = Firestore.firestore().collection("weatherPics")
     }
     
     @objc func showAddDialog() {
-        let alertController = UIAlertController(title: "Add a new Weatherpic", message: "", preferredStyle: UIAlertControllerStyle.alert)
         
-        alertController.addTextField { (textField) in
-            textField.placeholder = "Image URL or blank"
-        }
-        alertController.addTextField { (textField) in
-            textField.placeholder = "Caption"
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
+        // Create the AlertController
+        let actionSheetController = UIAlertController(title: "Please select", message: "How you would like to utilize the app?", preferredStyle: .actionSheet)
         
-        let createPictureAction = UIAlertAction(title: "Add Photo", style: UIAlertActionStyle.default) { (action) in
-            let photoUrlTextField = alertController.textFields![0]
-            let captionTextField = alertController.textFields![1]
-            
-            let newPicture = WeatherPic(caption: captionTextField.text!, imageUrl: photoUrlTextField.text!)
-            self.picRef.addDocument(data: newPicture.data)
+        // Create and add the Cancel action
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+            // Just dismiss the action sheet
         }
+        actionSheetController.addAction(cancelAction)
         
-        alertController.addAction(createPictureAction)
-        alertController.addAction(cancelAction)
-        present(alertController, animated: true, completion: nil)
+        // Create and add first option action
+        let takePictureAction = UIAlertAction(title: "Consumer", style: .default)
+        // { action -> Void in
+        
+        // }
+        actionSheetController.addAction(takePictureAction)
+        
+        // Create and add a second option action
+        let choosePictureAction = UIAlertAction(title: "Service provider", style: .default)
+        //{ action -> Void in
+        
+        //}
+        actionSheetController.addAction(choosePictureAction)
+        
+        self.present(actionSheetController, animated: true, completion: nil)
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
