@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        UIApplication.shared.statusBarStyle = .lightContent
+        window = UIWindow(frame: UIScreen.main.bounds)
         FirebaseApp.configure()
+        
+        if Auth.auth().currentUser == nil {
+            showLoginViewController();
+        } else {
+            showPictureHomeViewController();
+        }
+        window?.makeKeyAndVisible()
         return true
     }
 
@@ -42,5 +52,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
     }
+    
+    func handleLogin() {
+        //    print("TODO: Implement sign in from the AppDelegate")
+        showPictureHomeViewController()
+    }
+    
+    func showLoginViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        window!.rootViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+    }
+    
+    func showPictureHomeViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let homeViewController = storyboard.instantiateViewController(withIdentifier: "PictureHomeViewController")
+        window!.rootViewController = homeViewController
+    }
 }
 
+extension UIViewController {
+    var appDelegate : AppDelegate {
+        get {
+            return UIApplication.shared.delegate as! AppDelegate
+        }
+    }
+}

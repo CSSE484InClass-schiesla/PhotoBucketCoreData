@@ -8,5 +8,7 @@ target 'Photo Bucket Core Data' do
   # Pods for Photo Bucket Core Data
 pod 'Firebase/Core'
 pod 'Firebase/Firestore'
+pod 'Firebase/Auth'
+pod 'Rosefire', :git => 'https://ada.csse.rose-hulman.edu/rosefire/ios-sdk.git'
 
 end

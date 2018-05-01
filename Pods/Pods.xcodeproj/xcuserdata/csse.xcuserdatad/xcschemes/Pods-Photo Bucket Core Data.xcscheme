@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5143A637EF18DD2BCF0F30A8DA19B8C7"
+               BlueprintIdentifier = "C3DF696A0C5BED9C2A0BF6C51E281015"
                BuildableName = "Pods_Photo_Bucket_Core_Data.framework"
                BlueprintName = "Pods-Photo Bucket Core Data"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -26,7 +26,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -37,7 +36,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -47,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5143A637EF18DD2BCF0F30A8DA19B8C7"
+            BlueprintIdentifier = "C3DF696A0C5BED9C2A0BF6C51E281015"
             BuildableName = "Pods_Photo_Bucket_Core_Data.framework"
             BlueprintName = "Pods-Photo Bucket Core Data"
             ReferencedContainer = "container:Pods.xcodeproj">
