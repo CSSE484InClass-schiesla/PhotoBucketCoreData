@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BA1B65453BF8EA13DBB039F7BD873192"
+               BlueprintIdentifier = "75D88770EA2B6E8D3DDDED31C06EA066"
                BlueprintName = "Rosefire"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "Rosefire.framework">

@@ -10,15 +10,19 @@ import UIKit
 import Rosefire
 import Firebase
 import FirebaseAuth
+import GoogleSignIn
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, GIDSignInUIDelegate {
     
     let rosefireKey = "d3162b8d-b41e-408f-82af-0bff5c96e3c6"
+    
+    @IBOutlet weak var googleLoginButton: GIDSignInButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        GIDSignIn.sharedInstance().uiDelegate = self
+        googleLoginButton.style = .wide
     }
     
     @IBAction func loginWithRosefire(_ sender: Any) {
