@@ -35,15 +35,15 @@ class PictureTableViewController: UITableViewController {
         actionSheetController.addAction(cancelAction)
         
         let addPhotoAction = UIAlertAction(title: "Add Photo", style: .default)
-        // { action -> Void in
-        
-        // }
+        { action -> Void in
+            self.showAddDialog()
+        }
         actionSheetController.addAction(addPhotoAction)
         
         let editPhotoAction = UIAlertAction(title: "Edit", style: .default)
-        //{ action -> Void in
-        
-        //}
+        { action -> Void in
+            self.setEditing(!super.isEditing, animated: true)
+        }
         actionSheetController.addAction(editPhotoAction)
         
         let toggleShownPhotosAction = UIAlertAction(title: "Show only my photos", style: .default)
@@ -54,6 +54,30 @@ class PictureTableViewController: UITableViewController {
         
         self.present(actionSheetController, animated: true, completion: nil)
         
+    }
+    
+    @objc func showAddDialog() {
+        let alertController = UIAlertController(title: "Add a new Weatherpic", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Image URL or blank"
+        }
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Caption"
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
+        
+        let createPictureAction = UIAlertAction(title: "Add Photo", style: UIAlertActionStyle.default) { (action) in
+            let photoUrlTextField = alertController.textFields![0]
+            let captionTextField = alertController.textFields![1]
+            
+            let newPicture = WeatherPic(caption: captionTextField.text!, imageUrl: photoUrlTextField.text!)
+            self.picRef.addDocument(data: newPicture.data)
+        }
+        
+        alertController.addAction(createPictureAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
