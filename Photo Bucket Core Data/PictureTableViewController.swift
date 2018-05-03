@@ -21,45 +21,41 @@ class PictureTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //navigationItem.leftBarButtonItem = editButtonItem
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action: #selector(showAddDialog))
-        navigationItem.rightBarButtonItem?.title = "Menu"
-        
-        // We need to provide a popover sourceView when using it on iPad
-        //actionSheetController.popoverPresentationController?.sourceView = sender as UIView
-
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.plain, target: self, action: #selector(showActionSheetDialog))
         picRef = Firestore.firestore().collection("weatherPics")
     }
     
-    @objc func showAddDialog() {
+    @objc func showActionSheetDialog() {
         
-        // Create the AlertController
-        let actionSheetController = UIAlertController(title: "Please select", message: "How you would like to utilize the app?", preferredStyle: .actionSheet)
+        let actionSheetController = UIAlertController(title: "Photo Bucket Options", message: "", preferredStyle: .actionSheet)
         
-        // Create and add the Cancel action
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             // Just dismiss the action sheet
         }
         actionSheetController.addAction(cancelAction)
         
-        // Create and add first option action
-        let takePictureAction = UIAlertAction(title: "Consumer", style: .default)
+        let addPhotoAction = UIAlertAction(title: "Add Photo", style: .default)
         // { action -> Void in
         
         // }
-        actionSheetController.addAction(takePictureAction)
+        actionSheetController.addAction(addPhotoAction)
         
-        // Create and add a second option action
-        let choosePictureAction = UIAlertAction(title: "Service provider", style: .default)
+        let editPhotoAction = UIAlertAction(title: "Edit", style: .default)
         //{ action -> Void in
         
         //}
-        actionSheetController.addAction(choosePictureAction)
+        actionSheetController.addAction(editPhotoAction)
+        
+        let toggleShownPhotosAction = UIAlertAction(title: "Show only my photos", style: .default)
+        { action -> Void in
+        
+        }
+        actionSheetController.addAction(toggleShownPhotosAction)
         
         self.present(actionSheetController, animated: true, completion: nil)
         
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.pictures.removeAll()
