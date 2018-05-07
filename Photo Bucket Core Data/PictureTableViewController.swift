@@ -19,21 +19,27 @@ class PictureTableViewController: UITableViewController {
     var showDetailSegueId = "ShowDetailSegue"
     var pictures = [WeatherPic]()
     var currentUser: String = ""
-    let edit = "Edit"
-    let doneEdit = "Done Editing"
-    let myPhotos = "Show only my photos"
-    let allPhotos = "Show all photos"
     var editActionTitle: String!
     var photoFilterActionTitle: String!
     var isEditingPicList = false
     var isShowingMyPhotos = false
+    
+    enum editLabel: String {
+        case edit = "Edit"
+        case done = "Done Editing"
+    }
+    
+    enum photoFilterLabel: String {
+        case myPhotos = "Show only my photos"
+        case allPhotos = "Show all photos"
+    }
         
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.plain, target: self, action: #selector(showActionSheetDialog))
         picRef = Firestore.firestore().collection("weatherPics")
-        editActionTitle = edit
-        photoFilterActionTitle = myPhotos
+        editActionTitle = editLabel.edit.rawValue
+        photoFilterActionTitle = photoFilterLabel.myPhotos.rawValue
     }
     
     @objc func showActionSheetDialog() {
@@ -54,9 +60,9 @@ class PictureTableViewController: UITableViewController {
         let editPhotoAction = UIAlertAction(title: editActionTitle, style: .default)
         { action -> Void in
             if !super.isEditing {
-                self.editActionTitle = self.doneEdit
+                self.editActionTitle = editLabel.done.rawValue
             } else {
-                self.editActionTitle = self.edit
+                self.editActionTitle = editLabel.edit.rawValue
             }
             self.setEditing(!super.isEditing, animated: true)
         }
@@ -68,11 +74,11 @@ class PictureTableViewController: UITableViewController {
                 self.picListener.remove()
             }
             if !self.isShowingMyPhotos {
-                self.photoFilterActionTitle = self.allPhotos
+                self.photoFilterActionTitle = photoFilterLabel.allPhotos.rawValue
                 self.showMyPhotos()
                 self.isShowingMyPhotos = true
             } else {
-                self.photoFilterActionTitle = self.myPhotos
+                self.photoFilterActionTitle = photoFilterLabel.myPhotos.rawValue
                 self.showAllPhotos()
                 self.isShowingMyPhotos = false
             }
@@ -87,7 +93,6 @@ class PictureTableViewController: UITableViewController {
         actionSheetController.addAction(logOutAction)
         
         self.present(actionSheetController, animated: true, completion: nil)
-        
     }
     
     func showMyPhotos() {
@@ -98,13 +103,10 @@ class PictureTableViewController: UITableViewController {
             }
             snapshot.documentChanges.forEach {(docChange) in
                 if (docChange.type == .added) {
-                    print("New quote: \(docChange.document.data())")
                     self.picAdded(docChange.document)
                 } else if (docChange.type == .modified) {
-                    print("Modified quote: \(docChange.document.data())")
                     self.picUpdated(docChange.document)
                 } else if (docChange.type == .removed) {
-                    print("Removed quote: \(docChange.document.data())")
                     self.picRemoved(docChange.document)
                 }
             }
@@ -120,13 +122,10 @@ class PictureTableViewController: UITableViewController {
             }
             snapshot.documentChanges.forEach {(docChange) in
                 if (docChange.type == .added) {
-                    print("New quote: \(docChange.document.data())")
                     self.picAdded(docChange.document)
                 } else if (docChange.type == .modified) {
-                    print("Modified quote: \(docChange.document.data())")
                     self.picUpdated(docChange.document)
                 } else if (docChange.type == .removed) {
-                    print("Removed quote: \(docChange.document.data())")
                     self.picRemoved(docChange.document)
                 }
             }
@@ -209,7 +208,6 @@ class PictureTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return max(pictures.count, 1)
     }
 
