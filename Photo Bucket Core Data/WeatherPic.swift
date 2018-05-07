@@ -14,13 +14,16 @@ class WeatherPic: NSObject {
     var id: String?
     var caption: String
     var imageUrl: String
+    var user: String
     
     let captionKey = "caption"
     let urlKey = "imageUrl"
+    let userKey = "user"
     
-    init(caption: String, imageUrl: String) {
+    init(caption: String, imageUrl: String, user: String) {
         self.caption = caption
         self.imageUrl = imageUrl
+        self.user = user
     }
     
     init(documentSnapshot: DocumentSnapshot) {
@@ -28,10 +31,12 @@ class WeatherPic: NSObject {
         let data = documentSnapshot.data()!
         self.caption = data[captionKey] as! String
         self.imageUrl = data[urlKey] as! String
+        self.user = data[userKey] as! String
     }
     
     var data: [String: Any] {
         return [captionKey: self.caption,
-                urlKey: self.imageUrl]
+                urlKey: self.imageUrl,
+                userKey: self.user]
     }
 }
