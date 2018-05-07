@@ -79,6 +79,13 @@ class PictureTableViewController: UITableViewController {
         }
         actionSheetController.addAction(toggleShownPhotosAction)
         
+        let logOutAction = UIAlertAction(title: "Sign out", style: .destructive)
+        { action -> Void in
+            try! Auth.auth().signOut()
+            self.appDelegate.showLoginViewController()
+        }
+        actionSheetController.addAction(logOutAction)
+        
         self.present(actionSheetController, animated: true, completion: nil)
         
     }

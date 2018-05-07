@@ -20,8 +20,6 @@ class PictureDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: self, action: #selector(showEditDialog))
-        // Do any additional setup after loading the view.
     }
 
     @objc func showEditDialog() {
@@ -33,7 +31,7 @@ class PictureDetailViewController: UIViewController {
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
         
-        let editPhotoAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.default) { (action) in
+        let editPhotoAction = UIAlertAction(title: "Submit", style: UIAlertActionStyle.default) { (action) in
             let captionTextField = alertController.textFields![0]
             self.weatherPic?.caption = captionTextField.text!
             self.picRef?.setData(self.weatherPic!.data)
@@ -65,6 +63,9 @@ class PictureDetailViewController: UIViewController {
     }
     
     func updateView() {
+        if self.weatherPic?.user == Auth.auth().currentUser!.uid {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: self, action: #selector(self.showEditDialog))
+        }
         photoCaptionLabel.text = weatherPic?.caption
     }
     
@@ -85,6 +86,4 @@ class PictureDetailViewController: UIViewController {
             }
         }
     }
-
-
 }
