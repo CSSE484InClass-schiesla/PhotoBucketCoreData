@@ -147,10 +147,13 @@ class PictureTableViewController: UITableViewController {
         let createPictureAction = UIAlertAction(title: "Add Photo", style: UIAlertActionStyle.default) { (action) in
             let photoUrlTextField = alertController.textFields![0]
             let captionTextField = alertController.textFields![1]
-            
-            let newPicture = WeatherPic(caption: captionTextField.text!, imageUrl: photoUrlTextField.text!, user: self.currentUser)
-            
-            self.picRef.addDocument(data: newPicture.data)
+            if (photoUrlTextField.text?.isEmpty)! {
+                let newPicture = WeatherPic(caption: captionTextField.text!, imageUrl: "https://kids.nationalgeographic.com/content/dam/kids/photos/articles/Nature/H-P/Habitats/Ocean/wave.ngsversion.1500050062134.adapt.1900.1.jpg", user: self.currentUser)
+                self.picRef.addDocument(data: newPicture.data)
+            } else {
+               let newPicture = WeatherPic(caption: captionTextField.text!, imageUrl: photoUrlTextField.text!, user: self.currentUser)
+                self.picRef.addDocument(data: newPicture.data)
+            }
         }
         
         alertController.addAction(createPictureAction)
